@@ -33,11 +33,52 @@
 			KH_MEMBER
 		WHERE
 			MEMBER_ID = #{memberId}
-		AND
-			MEMBER_PW = #{memberPw}
 		   
 		   
 	</select>
+	<!-- AND
+			MEMBER_PW = #{memberPw} -->
+	
+	<!-- 아이디 중복 체크용 -->
+	<select
+			id="checkId"
+			parameterType="string"
+			resultType="_int">
+		SELECT
+			COUNT(*)
+		FROM
+			KH_MEMBER
+		WHERE
+			MEMBER_ID = #{ memberId }
+			
+	</select>
+	
+	<!-- 회원가입용 -->
+	<insert id="signUp"
+			parameterType="memberDTO"
+	>		INSERT
+			INTO
+					KH_MEMBER
+			VALUES
+				(
+				#{memberId},
+				#{memberPw},
+				#{memberName},
+				#{email},
+				SYSDATE
+				)
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

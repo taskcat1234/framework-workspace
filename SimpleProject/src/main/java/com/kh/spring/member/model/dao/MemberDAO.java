@@ -10,4 +10,12 @@ public class MemberDAO {
 	public MemberDTO login(SqlSessionTemplate sqlSession, MemberDTO member) {
 		return sqlSession.selectOne("memberMapper.login",member);
 	}
+	
+	public int checkId(SqlSessionTemplate sqlSession, String memberId) {
+		return sqlSession.selectOne("memberMapper.checkId", memberId);
+	}
+	
+	public int signUp(SqlSessionTemplate sqlSession , MemberDTO member) {
+		return sqlSession.insert("memberMapper.signUp", member);
+	}
 }
