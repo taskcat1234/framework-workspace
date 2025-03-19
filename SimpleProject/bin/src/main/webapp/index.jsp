@@ -4,11 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>안나오는페이지</title>
+<title>Insert title here</title>
 </head>
 <body>
 
-	<jsp:forward page="WEB-INF/views/main_page.jsp"/>
+	<h1>하이하이</h1>
 
 </body>
 </html>

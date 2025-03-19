@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<typeAliases>
+		<typeAlias type="com.kh.spring.member.model.dto.MemberDTO"/>
+	</typeAliases>
+	
+	<!--  
+		environments, dataSource => DB연결정보	
+		
+		객체를 생성!!
+	
+	-->
+	<!--
+	<environments default="">
+		<environment id="">
+			<dataSource type="">
+				<property name="username" value="KH16_TEACHER"/>
+			</dataSource>
+		</environment>
+	</environments>
+	-->
+	
+	<mappers>
+		<mapper resource="/mapper/member-mapper.xml" />
+	</mappers>
+</configuration>

@@ -4,11 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>안나오는페이지</title>
+<title> 메인 페이지 </title>
 </head>
 <body>
-
-	<jsp:forward page="WEB-INF/views/main_page.jsp"/>
+	<jsp:include page="include/header.jsp"/>
+	
+	<div style="height : 500px"/>
+	
+	<jsp:include page="include/footer.jsp"/>
 
 </body>
 </html>
