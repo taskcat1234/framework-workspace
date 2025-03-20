@@ -19,8 +19,8 @@ public interface MemberService{ // <- 계약서
 	void signUP(MemberDTO member);
 	
 	// 회원정보수정
-	//int update(MemberDTO member, HttpSession session);
-	MemberDTO update(MemberDTO member);
+	//int update(MemberDTO member, HttpSession session); //1번
+	void update(MemberDTO member, HttpSession session);  //2번
 	
 	// 회원탈퇴
 	int delete(MemberDTO member);

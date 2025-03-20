@@ -4,10 +4,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.spring.exception.DuplicateldException;
 import com.kh.spring.exception.InvalidParameterException;
 import com.kh.spring.exception.MemberNotFoundException;
 import com.kh.spring.exception.PasswordNotMatchException;
 import com.kh.spring.exception.TooLargeValueException;
+import com.kh.spring.exception.AuthenticationException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,6 +42,16 @@ public class ExceptionHandlingController {
 	
 	@ExceptionHandler(PasswordNotMatchException.class)
 	protected ModelAndView runTimeError(PasswordNotMatchException e) {
+		return createErrorResponse(e.getMessage(), e);
+	}
+	
+	@ExceptionHandler(DuplicateldException.class)
+	protected ModelAndView runTimeError(DuplicateldException e) {
+		return createErrorResponse(e.getMessage(), e);
+	}
+	
+	@ExceptionHandler(AuthenticationException.class)
+	protected ModelAndView runTimeError(AuthenticationException e) {
 		return createErrorResponse(e.getMessage(), e);
 	}
 	
