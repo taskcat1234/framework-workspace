@@ -144,11 +144,29 @@ public class MemberServicelmpl implements MemberService{
 		
 
 	}
-
 	@Override
 	public int delete(MemberDTO member) {
 		return 0;
 	}
+	
+	/*
+	@Override
+	public int userDelete(MemberDTO member, HttpSession session) {
+		MemberDTO sessionMember = (MemberDTO)session.getAttribute("loginMember");
+		// 사용자 검증
+		if(!member.getMemberId().equals(sessionMember.getMemberId())) {
+			throw new AuthenticationException("권한없는 접근입니다.");
+		}
+		validator.validatedLoginMember(member);
+		MemberDTO DeleteMember = validator.validateMemberExists(member);
+		if (DeleteMember.matches(member.getMemberPw() , DeleteMember.getMemberPw())) {
+			return DeleteMember;
+		} else {
+			throw new PasswordNotMatchException("비밀번호가 일치하지 않습니다.");
+		}
+
+	}
+	*/
 
 	
 	

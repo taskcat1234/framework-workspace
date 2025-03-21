@@ -251,8 +251,13 @@ public class MemberController {
 	// 비밀번호 입력받음
 	// 비밀번호가 맞는지 검증 => 예외 발생시키기
 	// DELETE성공했는지
-	
-	
+	/*
+	@PostMapping("userDelete")
+	public String userDelete(MemberDTO member, HttpSession session) {
+		memberService.userDelete(member, session);
+		return null;
+	}
+	*/
 	
 	
 	
