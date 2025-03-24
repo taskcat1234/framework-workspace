@@ -98,13 +98,13 @@
                 <tbody>
                 	<c:choose>
                 		<c:when test="${not empty board.replyList}">
-                			<c:froEach items="${board.replyList} var="reply">
+                			<c:forEach items="${ board.replyList }" var="reply">
                     			<tr>
                         			<th>${reply.replyWriter}</th>
                        				<td>${reply.replyContent}</td>
                         			<td>${reply.createDate}</td>
                     			</tr>
-                    		</c:froEach>
+                    		</c:forEach>
                     	</c:when>
                     	<c:otherwise>
                     		<tr>

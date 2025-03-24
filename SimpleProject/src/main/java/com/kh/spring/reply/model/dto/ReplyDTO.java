@@ -17,7 +17,7 @@ import lombok.ToString;
 @Builder
 public class ReplyDTO {
 	
-	private int repltNo;
+	private int replyNo;
 	private String replyWriter;
 	private String replyContent;
 	private Date createDate;

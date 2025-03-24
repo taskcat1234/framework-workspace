@@ -1,5 +1,6 @@
 package com.kh.spring.board.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -73,13 +74,33 @@ public class BoardController {
 	}
 	
 	@GetMapping("boards/{id}")
-	public ModelAndView goBoard(@PathVariable(name="id") int boardNo, ModelAndView mv) {
-		log.info("게시글번호 : {}" , boardNo);
-		if(boardNo < 0) {
+	public ModelAndView goBoard(@PathVariable(name="id") int boardNo,
+								ModelAndView mv) {
+		//log.info("게시글번호 : {}", boardNo);
+		if(boardNo < 1) {
 			throw new InvalidParameterException("비정상적인 접근입니다.");
 		}
 		BoardDTO board = boardService.selectBoard(boardNo);
 		mv.addObject("board", board).setViewName("board/board_detail");
+		return mv;
+	}
+	
+	@GetMapping("search")
+	public ModelAndView doSearch(@RequestParam(name="condition") String condition,
+								 @RequestParam(name="keyword") String keyword,
+								 @RequestParam(name="page", defaultValue="1") int page,
+								 ModelAndView mv){
+		
+		Map<String, String> map = new HashMap();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("currentPage", String.valueOf(page));
+		
+		Map<String, Object> list = boardService.doSearch(map);
+		list.put("condition", condition);
+		list.put("keyword", keyword);
+		mv.addObject("map",list).setViewName("board/board_list");
+		
 		return mv;
 	}
 	

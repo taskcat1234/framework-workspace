@@ -46,6 +46,7 @@ public interface BoardService {
 	// --------- 1절
 	
 	// 게시글 검색 기능
+	Map<String, Object> doSearch(Map<String, String> map);
 	
 	// 댓글 작성
 	

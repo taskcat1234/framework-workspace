@@ -1,6 +1,7 @@
 package com.kh.spring.board.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -21,14 +22,20 @@ public interface BoardMapper {
 	
 	BoardDTO selectBoard(int boardNo);
 	
-	// 1절
+	List<ReplyDTO> selectReply(int boardNo);
 	
-	List<ReplyDTO> selectReplyList(int boardNo);
+	BoardDTO selectBoardAndReply(int board);
+	
+	// --------- 여기까지 1절
 	
 	int updateBoard(BoardDTO board);
 	
-	int deleteVoard(int boardNo);
+	int deleteBoard(int boardNo);
 	
-	BoardDTO selectBoardAndReply(int boardNo);
 	
+	// -------------- 2절
+	
+	int searchedCount(Map<String, String> map);
+	
+	List<BoardDTO> selectSearchList(Map<String, String>map, RowBounds rb);
 }

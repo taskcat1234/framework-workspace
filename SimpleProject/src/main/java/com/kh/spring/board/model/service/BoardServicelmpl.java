@@ -35,22 +35,48 @@ public class BoardServicelmpl implements BoardService {
 	
 	private final BoardMapper boardMapper;
 	
-	@Override
-	public void insertBoard(BoardDTO board, MultipartFile file, HttpSession session) {
-		//1. 권한 체크
+	private void validateUser(HttpSession session, BoardDTO board) {
 		MemberDTO loginMember = (MemberDTO)session.getAttribute("loginMember");
 		if(loginMember != null && !loginMember.getMemberId().equals(board.getBoardWriter())) {
 			throw new AuthenticationException("권한 없는 접근입니다.");
 		}
+	}
+	
+	private void validateContent(BoardDTO board) {
+		if(
+			board.getBoardTitle() == null || board.getBoardTitle().trim().isEmpty() ||
+			board.getBoardContent() == null || board.getBoardContent().trim().isEmpty() ||
+			board.getBoardWriter() == null || board.getBoardWriter().trim().isEmpty()) {
+				throw new InvalidParameterException("유효하지 않은 요청입니다.");
+			}
+	}
+	
+	//private void
+	
+	@Override
+	public void insertBoard(BoardDTO board, MultipartFile file, HttpSession session) {
+		//1. 권한 체크
+		validateUser(session, board);
 		
 		//2. 유효성 검사
-		if(
-		   board.getBoardTitle() == null || board.getBoardTitle().trim().isEmpty() ||
-		   board.getBoardContent() == null || board.getBoardContent().trim().isEmpty() ||
-		   board.getBoardWriter() == null || board.getBoardWriter().trim().isEmpty()) {
-			throw new InvalidParameterException("유효하지 않은 요청입니다.");
-		}
+		validateContent(board);
 		//2-2
+		
+		/*
+		 * <,>,\, &
+		 */
+		
+		String boardTitle = board.getBoardTitle()
+												 .replaceAll("<", "&lt;")
+												 .replaceAll(">", "&gt;")
+												 .replaceAll("\n", "<br>");
+		String boardContent = board.getBoardContent()
+												   .replaceAll("<", "&lt;")
+				 								   .replaceAll(">", "&gt;")
+				 								   .replaceAll("\n", "<br>");
+		board.setBoardTitle(boardTitle);
+		board.setBoardContent(boardContent);
+		
 		
 		// 3) 파일유무 체크// 이름 바꾸기 + 저장
 		if(!file.getOriginalFilename().isEmpty()) {
@@ -134,5 +160,62 @@ public class BoardServicelmpl implements BoardService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Map<String, Object> doSearch(Map<String, String> map) {
+		//했다고 침 map에서 get("condition") / get("ketword") 값이 비었나 안비었나 확인
+		
+		int searchedCount = boardMapper.searchedCount(map);
+		
+		log.info("넘어온 값? : {}", searchedCount);
+		 
+		Pagelnfo pi = Pagination.getPageInfo(searchedCount,
+											  Integer.parseInt(map.get("currentPage")),
+											  3,
+											  3);
+		
+		RowBounds rb = new RowBounds((pi.getCurrentPage() - 1) * 3, 3 );
+		
+		List<BoardDTO> boards = boardMapper.selectSearchList(map,rb);
+		
+		Map<String,Object> returnValue = new HashMap();
+		returnValue.put("boards", boards);
+		returnValue.put("pageInfo", pi);
+		
+		
+		return returnValue;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
